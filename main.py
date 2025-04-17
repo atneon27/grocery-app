@@ -10,6 +10,7 @@ app = FastAPI(
     description="A simple grocery app", 
 )
 
+# to setup the database on startup
 @app.on_event("startup")
 def startup_event():
     db = sqlite3.connect("db/grocery.db")

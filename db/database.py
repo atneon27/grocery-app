@@ -19,6 +19,7 @@ create_order_table = '''
     );
 '''
 
+# to provider a connection to the database to every route
 def get_db():
     conn = sqlite3.connect('db/grocery.db')
     try:
@@ -26,6 +27,7 @@ def get_db():
     finally:
         conn.close()
 
+# to setup the database on startup
 def setup_db(db: sqlite3.Connection):
     curr = db.cursor()
     curr.execute(create_product_table)

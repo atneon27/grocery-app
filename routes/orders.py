@@ -5,7 +5,12 @@ from services.order_service import insertOrder, fetch_orders, fetch_order
 
 router = APIRouter(prefix="/order", tags=["Order"])
 
-@router.get("/", status_code=200, response_model=list[OrderBase])
+@router.get(
+    "/", 
+    status_code=200, 
+    response_model=list[OrderBase], 
+    description="Get all existing orders"
+)
 def get_orders(db=Depends(get_db)):
     try:
         orders = fetch_orders(db)
@@ -13,7 +18,11 @@ def get_orders(db=Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e)) 
 
-@router.post("/", status_code=201)
+@router.post(
+    "/",
+    status_code=201,
+    description="Create a new order"
+)
 def create_order(order: OrderBody, db=Depends(get_db)):
     try:
         insertOrder(db, order)
@@ -24,7 +33,12 @@ def create_order(order: OrderBody, db=Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@router.get("/{order_id}", status_code=200, response_model=OrderBase)
+@router.get(
+    "/{order_id}", 
+    status_code=200, 
+    response_model=OrderBase,
+    description="Get a single order"
+)
 def get_order(order_id: str, db=Depends(get_db)):
     try:
         order = fetch_order(db, order_id)

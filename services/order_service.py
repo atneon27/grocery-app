@@ -2,6 +2,8 @@ import sqlite3
 from models import OrderBody
 from utils.validations import validate_order
 
+#helper fucntions
+# to insert an order
 def insertOrder(
     db: sqlite3.Connection,
     order: OrderBody
@@ -17,6 +19,7 @@ def insertOrder(
         
     db.commit()
 
+# to fetch all existing orders
 def fetch_orders(db: sqlite3.Connection):
     orders_dict = {}
     curr = db.cursor()
@@ -58,6 +61,7 @@ def fetch_orders(db: sqlite3.Connection):
 
     return list(orders_dict.values())
 
+# to fetch a single order
 def fetch_order(db: sqlite3.Connection, order_id: str):
     curr = db.cursor()
     curr.execute("""

@@ -1,6 +1,7 @@
 import sqlite3
-from models import ProductBody, OrderBody
+from models import ProductBody
 
+# check for product uniqueness and price per unit value
 def validate_product(curr: sqlite3.Cursor, product: ProductBody):
     count = curr.execute(
         "SELECT COUNT(*) FROM products WHERE name = ?",
@@ -14,6 +15,7 @@ def validate_product(curr: sqlite3.Cursor, product: ProductBody):
     if product.price_per_unit < 0:
         raise ValueError("Price per unit is negetive")
     
+# check for product existence and quantity value
 def validate_order(curr: sqlite3.Cursor, product_id: int, quatnity: int):
     count = curr.execute(
         "SELECT COUNT(*) FROM products WHERE id = ?",
@@ -21,7 +23,7 @@ def validate_order(curr: sqlite3.Cursor, product_id: int, quatnity: int):
     )
 
     order_cnt = count.fetchone()[0]
-    
+
     if order_cnt == 0:    
         raise ValueError("Product dose not exist")
     if quatnity < 0:    
